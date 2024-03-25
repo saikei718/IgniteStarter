@@ -1,0 +1,24 @@
+name: Build and Deploy Static Site
+
+on:
+  push:
+    branches:
+      - feat/**
+
+jobs:
+  deploy:
+    runs-on: macos-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: build
+        run: swift build -v
+
+      - name: commit generated static site
+        run: |
+          git config user.name robots
+          git config user.email robots@example.com
+          git add .
+          git commit -m "commit from github"
+          git push
